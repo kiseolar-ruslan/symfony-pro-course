@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users list!{% endblock %}
+{% block title %}{{ user.login }} | User info!{% endblock %}
 
 {% block body %}
     <style>
@@ -18,11 +18,8 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Users list ✅</h1>
-        <ul>
-            {% for user in users %}
-                <li>{{ user.id }}. {{ user.login }} - {{ user.status }}</li>
-            {% endfor %}
-        </ul>
+        <h1>User {{ user.login }}✅</h1>
+
+        {{ user.id }}. {{ user.login }} - {{ user.status }}
     </div>
 {% endblock %}
