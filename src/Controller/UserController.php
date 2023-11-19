@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Phone;
 use App\Entity\User;
+use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +26,12 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/', name: 'user_create', requirements: ['id' => '\d+'], methods: 'POST')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    #[Route('/', name: 'user_create', methods: 'POST')]
+    public function create(Request $request, UserService $service): Response
     {
         $data = json_decode($request->getContent(), true);
-        $user = new User($data['login'], $data['password']);
-
-        $em->persist($user);
-        $em->flush();
+        $user = $service->createUser($data['login'], $data['password']);
+        $service->saveToDB();
 
         return $this->render('user/user_info.html.twig', [
             'controller_name' => 'UserController',
