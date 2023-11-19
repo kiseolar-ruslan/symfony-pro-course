@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 
+use App\Repository\PhoneRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity()]
+#[ORM\Entity(repositoryClass: PhoneRepository::class)]
 #[ORM\Table(name: 'phones')]
 class Phone
 {
@@ -22,35 +23,22 @@ class Phone
     #[ORM\Column(length: 45)]
     private string $phone;
 
-    /**
-     * @param User $user
-     * @param string $phone
-     */
     public function __construct(User $user, string $phone)
     {
         $this->user  = $user;
         $this->phone = $phone;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getPhone(): string
     {
         return $this->phone;

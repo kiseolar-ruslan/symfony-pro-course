@@ -6,21 +6,64 @@ use App\Entity\Phone;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/users')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'show_users')]
+    #[Route('/', name: 'show_users', methods: 'GET')]
     public function showAllUsers(EntityManagerInterface $em): Response
     {
         $repo  = $em->getRepository(User::class);
         $users = $repo->findAll();
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/show_users.html.twig', [
             'controller_name' => 'UserController',
             'users' => $users,
+        ]);
+    }
+
+    #[Route('/', name: 'user_create', requirements: ['id' => '\d+'], methods: 'POST')]
+    public function create(Request $request, EntityManagerInterface $em): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $user = new User($data['login'], $data['password']);
+
+        $em->persist($user);
+        $em->flush();
+
+        return $this->render('user/user_info.html.twig', [
+            'controller_name' => 'UserController',
+            'user'            => $user,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'user_update', requirements: ['id' => '\d+'], methods: 'PUT')]
+    public function update(User $user, Request $request, EntityManagerInterface $em): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $user->changeLogin($data['login']);
+        $user->changePassword($data['password']);
+        $em->flush();
+
+        return $this->render('user/user_info.html.twig', [
+            'controller_name' => 'UserController',
+            'user'            => $user,
+        ]);
+    }
+
+    #[Route('/{id}/{phone}', name: 'user_add_phone', requirements: ['id' => '\d+'], methods: 'GET')]
+    public function addPhone(User $user, string $phone, EntityManagerInterface $em): Response
+    {
+        $user->addPhone($phoneObj = new Phone($user, $phone));
+        $em->persist($phoneObj);
+        $em->flush();
+
+        return $this->render('user/user_info.html.twig', [
+            'controller_name' => 'UserController',
+            'user'            => $user,
         ]);
     }
 
@@ -32,7 +75,6 @@ class UserController extends AbstractController
             'user'            => $user,
         ]);
     }
-
 
     #[Route('/generate', name: 'generate_users')]
     public function generate(EntityManagerInterface $em): Response
