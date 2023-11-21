@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FirstTestController extends AbstractController
+class TestController extends AbstractController
 {
     #[Route('/lucky/number/{max}', name: 'lucky_number', methods: 'GET')]
     public function luckyNumber(int $max): Response
@@ -25,7 +25,7 @@ class FirstTestController extends AbstractController
     }
 
     #[Route('/redirect/to/lucky', name: 'redirect_to_lucky_page', methods: 'GET')]
-    public function redirectToLuckyPage(Request $request): RedirectResponse
+    public function redirectToLuckyPage(): RedirectResponse
     {
         return $this->redirectToRoute(
             'lucky_number',
@@ -36,7 +36,8 @@ class FirstTestController extends AbstractController
 
     #[Route('/test/interface', name: 'test_interface', methods: 'GET')]
     public function testInterface(
-        #[Autowire(service: 'App\Services\TestInterface\FirstTestChild')] TestInterface $service
+        //#[Autowire(service: 'App\Services\TestInterface\FirstTestChild')]
+        TestInterface $service
     ): Response {
         return new Response($service->printMessage());
     }
@@ -57,7 +58,7 @@ class FirstTestController extends AbstractController
     #[Route('/request/object', name: 'request_obj', methods: 'GET')]
     public function requestObj(Request $request): Response
     {
-        $page = $request->query->get('page', 1);
+        $page = $request->query->get('managing_errors', 1);
 
         return new Response(200);
     }
