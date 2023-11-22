@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/url')]
 class UrlConverterController extends AbstractController
 {
-    #[Route('/encode/{url}', name: 'url_encode', requirements: ['url' => 'http.*'], methods: 'GET')]
+    #[Route('/encode/{url}', name: 'url_encode', requirements: ['url' => '(http|https|ftp):\/\/.*'], methods: 'GET')]
     public function testUrlEncode(string $url, IUrlEncoder $converter): Response
     {
         $code = $converter->encode($url);
@@ -21,7 +21,7 @@ class UrlConverterController extends AbstractController
         ]);
     }
 
-    #[Route('/decode/{code}', name: 'url_decode', methods: 'GET')]
+    #[Route('/decode/{code}', name: 'url_decode', requirements: ['code' => '[a-zA-Z0-9]+'], methods: 'GET')]
     public function testUrlDecode(string $code, IUrlDecoder $converter): Response
     {
         $url = $converter->decode($code);
