@@ -58,8 +58,8 @@ class TestController extends AbstractController
     #[Route('/request/object', name: 'request_obj', methods: 'GET')]
     public function requestObj(Request $request): Response
     {
-        $page = $request->query->get('managing_errors', 1);
+        $page = $request->getUser();
 
-        return new Response(200);
+        return new Response($page);
     }
 }

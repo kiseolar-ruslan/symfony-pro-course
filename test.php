@@ -20,8 +20,19 @@ $a = [
 //    echo $item['c'];
 //}
 
-$test = [1, 2, 3, 4, 5];
+//$test = [1, 2, 3, 4, 5];
+//
+//for ($i = 0; $i < count($test); $i++) {
+//    echo $test[$i] . PHP_EOL;
+//}
 
-for ($i = 0; $i < count($test); $i++) {
-    echo $test[$i] . PHP_EOL;
-}
+$urlConverter = new \App\UrlConverter\UrlConverter(
+    new \App\UrlConverter\Repository\FileRepository(),
+    new \App\UrlConverter\Actions\ToFileSaver(),
+    new \App\UrlConverter\Validate\ValidateUrl()
+);
+
+$a      = $urlConverter->encode('https://instagram.com');
+$decode = $urlConverter->decode($a);
+echo $a . PHP_EOL;
+echo $decode . PHP_EOL;
