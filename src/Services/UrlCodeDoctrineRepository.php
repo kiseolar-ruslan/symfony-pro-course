@@ -45,7 +45,6 @@ class UrlCodeDoctrineRepository implements ICodeRepository
         if (true === is_null($entity)) {
             throw new InvalidArgumentException("Data not found");
         }
-
         return $entity;
     }
 }
