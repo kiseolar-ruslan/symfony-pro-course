@@ -30,7 +30,8 @@ services:
 
   App\UrlConverter\Interfaces\IUrlDecoder:
     class: App\UrlConverter\UrlConverter
-
+    arguments:
+      $codeLength: '%codeLength%'
 
   App\UrlConverter\Interfaces\ICodeRepository:
     class: App\Services\UrlCodeDoctrineRepository
