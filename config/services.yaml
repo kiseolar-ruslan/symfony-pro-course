@@ -23,5 +23,14 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Services\TestInterface\TestInterface:
-        class: App\Services\TestInterface\FirstTestChild
+    App\UrlConverter\Interfaces\IUrlEncoder:
+        class: App\UrlConverter\UrlConverter
+
+    App\UrlConverter\Interfaces\ICodeRepository:
+        class: App\UrlConverter\Repository\FileRepository
+
+    App\UrlConverter\Interfaces\ISaveData:
+        class: App\UrlConverter\Actions\ToFileSaver
+
+    App\UrlConverter\Interfaces\IUrlDecoder:
+        class: App\UrlConverter\UrlConverter

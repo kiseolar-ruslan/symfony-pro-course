@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Services\TestInterface\TestInterface;
+use App\UrlConverter\Interfaces\IUrlDecoder;
+use App\UrlConverter\Interfaces\IUrlEncoder;
+use App\UrlConverter\UrlConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
