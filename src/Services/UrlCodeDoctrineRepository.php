@@ -30,23 +30,22 @@ class UrlCodeDoctrineRepository implements ICodeRepository
 
     public function getUrlByCode(string $code): string
     {
-        $url = $this->repository->findOneBy(['code' => $code]);
-
-        if (true === is_null($url)) {
-            throw new InvalidArgumentException("Url not found by code - $code");
-        }
-
-        return $url->getUrl();
+        return $this->getData('code', $code)->getUrl();
     }
 
     public function getCodeByUrl(string $url): string
     {
-        $code = $this->repository->findOneBy(['url' => $url]);
+        return $this->getData('url', $url)->getCode();
+    }
 
-        if (true === is_null($code)) {
-            throw new InvalidArgumentException("Code not found by url - $url");
+    protected function getData(string $key, string $value): object
+    {
+        $entity = $this->repository->findOneBy([$key => $value]);
+
+        if (true === is_null($entity)) {
+            throw new InvalidArgumentException("Data not found by - $value");
         }
 
-        return $code->getCode();
+        return $entity;
     }
 }
