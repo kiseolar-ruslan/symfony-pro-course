@@ -13,7 +13,7 @@ use InvalidArgumentException;
 
 class UrlConverter implements IUrlEncoder, IUrlDecoder
 {
-    protected const CODE_LENGTH = 5;   //todo bring to the configuration level
+    protected const CODE_LENGTH = 5;
 
     protected const FILE_NAME = 'url.json';
 

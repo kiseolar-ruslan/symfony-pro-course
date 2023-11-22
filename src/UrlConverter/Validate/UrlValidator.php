@@ -7,7 +7,7 @@ namespace App\UrlConverter\Validate;
 use App\UrlConverter\Interfaces\IUrlValidator;
 use InvalidArgumentException;
 
-class ValidateUrl implements IUrlValidator
+class UrlValidator implements IUrlValidator
 {
     public function validateUrl(string $url): bool
     {

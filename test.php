@@ -28,8 +28,8 @@ $a = [
 
 $urlConverter = new \App\UrlConverter\UrlAnywayConverter(
     new \App\UrlConverter\Repository\FileRepository(),
-    new \App\UrlConverter\Actions\ToFileSaver(),
-    new \App\UrlConverter\Validate\ValidateUrl()
+    new \App\UrlConverter\Savers\ToFileSaver(),
+    new \App\UrlConverter\Validate\UrlValidator()
 );
 
 $a      = $urlConverter->encode('https://instagram.com');

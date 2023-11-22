@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UrlConverter\Actions;
+namespace App\UrlConverter\Savers;
 
 use App\ORM\ActiveRecord\Models\UrlCode;
 use App\UrlConverter\Interfaces\ISaveData;
