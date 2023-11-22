@@ -26,7 +26,7 @@ $a = [
 //    echo $test[$i] . PHP_EOL;
 //}
 
-$urlConverter = new \App\UrlConverter\UrlConverter(
+$urlConverter = new \App\UrlConverter\UrlAnywayConverter(
     new \App\UrlConverter\Repository\FileRepository(),
     new \App\UrlConverter\Actions\ToFileSaver(),
     new \App\UrlConverter\Validate\ValidateUrl()

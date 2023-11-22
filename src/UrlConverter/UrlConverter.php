@@ -51,8 +51,8 @@ class UrlConverter implements IUrlEncoder, IUrlDecoder
      */
     protected function generateAndSaveCode(string $url): string
     {
-        $inputUrl            = $url;
-        $code                = $this->generateCode($url);
+        $inputUrl = $url;
+        $code     = $this->generateCode($url);
         $preparedData[$code] = $inputUrl;
         $this->saveData->saveData($preparedData);
 
@@ -61,8 +61,8 @@ class UrlConverter implements IUrlEncoder, IUrlDecoder
 
     protected function generateCode(string $url): string
     {
-        $time          = time();
-        $randNum       = rand(0, 9);
+        $time    = time();
+        $randNum = rand(0, 9);
         $lowerCaseCode = hash('sha256', $time . $url . $randNum);
         return substr(mb_strtoupper($lowerCaseCode), 0, $this->codeLength);
     }

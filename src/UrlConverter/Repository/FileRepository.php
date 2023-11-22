@@ -20,7 +20,7 @@ class FileRepository implements ICodeRepository
     public function getDataFromStorage(): void
     {
         if (true === file_exists($this->dataFileName)) {
-            $content             = file_get_contents($this->dataFileName);
+            $content = file_get_contents($this->dataFileName);
             $this->dataContainer = (array)json_decode($content, true);
         }
     }
