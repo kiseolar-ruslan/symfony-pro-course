@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\UrlCode;
+use App\Traits\BaseRepository;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -15,5 +16,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class UrlCodeRepository extends EntityRepository
 {
-
+    use BaseRepository;
 }
