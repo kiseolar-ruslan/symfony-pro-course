@@ -19,6 +19,7 @@ class UserService
 
     public function createUser(string $login, string $pass, ?int $status = null): User
     {
+        //todo create user's factory
         $user = new User($login, $pass, $status ?? User::STATUS_DISABLED);
         $this->em->persist($user);
 
