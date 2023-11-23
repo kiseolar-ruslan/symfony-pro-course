@@ -25,17 +25,17 @@ class UrlCodeDoctrineRepository implements ICodeRepository
 
     public function codeIsset(string $code): bool
     {
-        return (bool)$this->repository->findOneBy(['code' => $code]);
+        return (bool)$this->repository->findOneBy([UrlCode::COLUMN_NAME_CODE => $code]);
     }
 
     public function getUrlByCode(string $code): string
     {
-        return $this->getData(['code' => $code])->getUrl();
+        return $this->getData([UrlCode::COLUMN_NAME_CODE => $code])->getUrl();
     }
 
     public function getCodeByUrl(string $url): string
     {
-        return $this->getData(['url' => $url])->getCode();
+        return $this->getData([UrlCode::COLUMN_NAME_URL => $url])->getCode();
     }
 
     protected function getData(array $criteria): object
@@ -45,6 +45,7 @@ class UrlCodeDoctrineRepository implements ICodeRepository
         if (true === is_null($entity)) {
             throw new InvalidArgumentException("Data not found");
         }
+
         return $entity;
     }
 }

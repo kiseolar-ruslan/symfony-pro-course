@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UrlCodeRepository::class)]
 class UrlCode
 {
+    public const COLUMN_NAME_CODE = 'code';
+    public const COLUMN_NAME_URL  = 'url';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
