@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
+use App\Interfaces\IncrementalInterface;
 use App\Repository\UrlCodeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UrlCodeRepository::class)]
-class UrlCode
+class UrlCode implements IncrementalInterface
 {
     public const COLUMN_NAME_CODE = 'code';
     public const COLUMN_NAME_URL  = 'url';

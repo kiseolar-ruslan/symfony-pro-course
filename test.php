@@ -36,3 +36,4 @@ $a      = $urlConverter->encode('https://instagram.com');
 $decode = $urlConverter->decode($a);
 echo $a . PHP_EOL;
 echo $decode . PHP_EOL;
+
