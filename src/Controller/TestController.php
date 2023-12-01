@@ -48,8 +48,7 @@ class TestController extends AbstractController
     #[Route('/error/{id}', name: 'managing_errors', methods: 'GET')]
     public function managingErrors(User $user, EntityManagerInterface $em): Response
     {
-        $userFromDB = $em->getRepository(User::class)
-                         ->findOneBy(['id' => $user]);
+        $userFromDB = $em->getRepository(User::class)->findOneBy(['id' => $user]);
 
         if (true === is_null($userFromDB)) {
             throw $this->createNotFoundException('The user does not exist!');

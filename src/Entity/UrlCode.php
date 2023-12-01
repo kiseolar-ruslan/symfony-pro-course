@@ -16,6 +16,9 @@ class UrlCode
     #[ORM\Column]
     private int $id;
 
+    #[ORM\Column(type: 'integer', length: 255)]
+    protected int $counter = 0;
+
     public function __construct(
         #[ORM\Column(length: 255)]
         private string $url,
@@ -37,5 +40,15 @@ class UrlCode
     public function getCode(): string
     {
         return $this->code;
+    }
+
+    public function incrementCounter(): void
+    {
+        $this->counter++;
+    }
+
+    public function getCounter(): int
+    {
+        return $this->counter;
     }
 }
