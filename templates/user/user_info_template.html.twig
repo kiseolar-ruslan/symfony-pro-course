@@ -1,0 +1,14 @@
+<div class="container user-block">
+    <div class="row">
+        <div class="col-4">
+            <img style="width: 80px" src="https://cdn-icons-png.flaticon.com/512/3541/3541871.png" alt="User image">
+        </div>
+        <div class="col">
+            Id: {{ user.id }}
+            <br>
+            Login: <a href="{{ path('user_info', { id: user.id}) }}">{{ user.login }}</a>
+            <br>
+            Status: {{ user.status }}
+        </div>
+    </div>
+</div>
