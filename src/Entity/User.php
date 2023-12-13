@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const STATUS_DISABLED = 0;
     public const STATUS_ACTIVE   = 1;
@@ -24,7 +26,10 @@ class User
     #[ORM\Column(length: 60)]
     private string $login;
 
-    #[ORM\Column(length: 32)]
+    #[ORM\Column(length: 60, unique: true, nullable: false)]
+    private string $email;
+
+    #[ORM\Column()]
     private string $password;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Phone::class, fetch: 'LAZY')]
@@ -39,6 +44,16 @@ class User
         $this->changePassword($password);
         $this->status = $status;
         $this->phones = new ArrayCollection();
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 
     public function getStatus(): int
@@ -109,5 +124,19 @@ class User
     public function addPhone(Phone $phone): void
     {
         $this->phones->add($phone);
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }
