@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'users')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const STATUS_DISABLED = 0;
@@ -24,7 +26,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(length: 60)]
-    private string $login;
+    private string $login = '';
 
     #[ORM\Column(length: 60, unique: true, nullable: false)]
     private string $email;
@@ -35,14 +37,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Phone::class, fetch: 'LAZY')]
     private Collection $phones;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private int $status;
+    #[ORM\Column(type: Types::SMALLINT, options: ['default' => 0])]
+    private int $status = 0;
 
-    public function __construct(string $login, string $password, int $status = self::STATUS_DISABLED)
+    public function __construct()
     {
-        $this->login = $login;
-        $this->changePassword($password);
-        $this->status = $status;
         $this->phones = new ArrayCollection();
     }
 
@@ -81,9 +80,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function changePassword(string $password): void
+    public function setPassword(string $password): void
     {
-        $this->password = md5($password);
+        $this->password = $password;
     }
 
     public function isActiveUser(): bool

@@ -35,8 +35,9 @@ class UrlConverterController extends AbstractController
     }
 
     #[Route('/{code}', name: 'short_url', requirements: ['code' => '[a-zA-Z0-9]+'], methods: 'GET')]
-    public function urlRedirect(UrlCode                       $urlCodeEntity,
-                                IncrementAndSaveEntityService $incrementAndSave
+    public function urlRedirect(
+        UrlCode                       $urlCodeEntity,
+        IncrementAndSaveEntityService $incrementAndSave
     ): RedirectResponse {
         $incrementAndSave->increment($urlCodeEntity);
         return $this->redirect($urlCodeEntity->getUrl());
