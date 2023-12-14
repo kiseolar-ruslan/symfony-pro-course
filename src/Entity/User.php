@@ -37,12 +37,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Phone::class, fetch: 'LAZY')]
     private Collection $phones;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UrlCode::class, fetch: 'LAZY')]
+    private Collection $urls;
+
     #[ORM\Column(type: Types::SMALLINT, options: ['default' => 0])]
     private int $status = 0;
 
     public function __construct()
     {
         $this->phones = new ArrayCollection();
+    }
+
+    public function getUrls(): Collection
+    {
+        return $this->urls;
     }
 
     public function setEmail(string $email): void
