@@ -4,21 +4,25 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Services\Factory\FactoryInterface;
+use App\Services\Factory\UrlCodeFactoryInterface;
 use App\UrlConverter\Interfaces\ISaveData;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class UrlCodeDoctrineSaver implements ISaveData
 {
     public function __construct(
-        protected EntityManagerInterface $em,
-        protected FactoryInterface       $factory
+        protected EntityManagerInterface  $em,
+        protected UrlCodeFactoryInterface $factory,
+        protected Security                $security
     ) {
     }
 
     public function saveData(array $data): void
     {
-        $entity = $this->factory->create($data);
+        $user = $this->security->getUser();
+
+        $entity = $this->factory->create($data, $user);
 
         $this->em->persist($entity);
         $this->em->flush();
