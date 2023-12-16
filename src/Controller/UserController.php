@@ -44,7 +44,7 @@ class UserController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $user->changeLogin($data['login']);
-        $user->changePassword($data['password']);
+        $user->setPassword($data['password']);
         $em->flush();
 
         return $this->render('user/user_info.html.twig', [

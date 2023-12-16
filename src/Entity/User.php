@@ -53,9 +53,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->urls;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getEmail(): string
@@ -88,9 +90,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
     }
 
     public function isActiveUser(): bool
@@ -108,19 +112,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->status === static::STATUS_VIP;
     }
 
-    public function setStatusDisabled(): void
+    public function setStatusDisabled(): static
     {
         $this->status = static::STATUS_DISABLED;
+
+        return $this;
     }
 
-    public function setStatusActive(): void
+    public function setStatusActive(): static
     {
         $this->status = static::STATUS_ACTIVE;
+
+        return $this;
     }
 
-    public function setStatusVIP(): void
+    public function setStatusVIP(): static
     {
         $this->status = static::STATUS_VIP;
+
+        return $this;
     }
 
     public function getPhones(): Collection

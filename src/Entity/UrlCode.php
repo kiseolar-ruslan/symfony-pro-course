@@ -27,7 +27,7 @@ class UrlCode implements IncrementalInterface
         private string $code,
         #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EAGER', inversedBy: 'urls')]
         #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-        protected User $user,
+        private User $user,
     ) {
     }
 
