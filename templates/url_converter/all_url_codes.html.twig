@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Url converter!{{ parent() }}{% endblock %}
+
+{% block content %}
+    {% for url_code in url_codes %}
+        <div>
+            Id: {{ url_code.id }} |
+            Url: {{ url_code.url }} |
+            Code: {{ url_code.code }} |
+            Counter: {{ url_code.counter }}
+        </div>
+    {% endfor %}
+{% endblock %}
