@@ -7,7 +7,7 @@ namespace App\Services\Factory;
 use App\Entity\UrlCode;
 use App\Entity\User;
 
-class UrlCodeFactory implements UrlCodeFactoryInterface
+class UrlCodeFactory
 {
     public function create(array $data, User $user): UrlCode
     {
