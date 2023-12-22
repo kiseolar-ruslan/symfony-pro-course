@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Url converter!{{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="example-wrapper">
+        <h1>Url info! ✅</h1>
+        <div>
+            Id: {{ url_code.id }}
+            <br>
+            Url: {{ url_code.url }}
+            <br>
+            Code: {{ url_code.code }}
+            <br>
+            Counter: {{ url_code.counter }}
+            <br>
+            User: {{ url_code.user.email }}
+        </div>
+    </div>
+{% endblock %}

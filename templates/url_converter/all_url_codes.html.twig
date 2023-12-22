@@ -3,12 +3,15 @@
 {% block title %}Url converter!{{ parent() }}{% endblock %}
 
 {% block content %}
+    <h1>Urls info</h1>
+    {{ include('url_converter/add_url_encode_block.html.twig') }}
     {% for url_code in url_codes %}
         <div>
             Id: {{ url_code.id }} |
             Url: {{ url_code.url }} |
-            Code: {{ url_code.code }} |
-            Counter: {{ url_code.counter }}
+            Code: <a href="{{ path('url_decode', {code: url_code.code}) }}">{{ url_code.code }}</a> |
+            Counter: {{ url_code.counter }} |
+            User: {{ url_code.user.email }}
         </div>
     {% endfor %}
 {% endblock %}
