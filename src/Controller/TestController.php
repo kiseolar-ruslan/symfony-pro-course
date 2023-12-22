@@ -64,4 +64,18 @@ class TestController extends AbstractController
 
         return new Response($page);
     }
+
+    #[Route('/test', name: 'test_post', methods: 'POST')]
+    public function testPostMethod(Request $request): Response
+    {
+        $url = $request->get('url');
+        dd($request);
+        return new Response($url);
+    }
+
+    #[Route('/test2', name: 'test_post2', methods: 'GET')]
+    public function test2PostMethod(): Response
+    {
+        return $this->render('first_test/testPost.twig');
+    }
 }
