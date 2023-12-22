@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\UrlCode;
 use App\Services\CodePairService;
 use App\Services\IncrementAndSaveEntityService;
-use App\UrlConverter\Interfaces\IUrlDecoder;
 use App\UrlConverter\Interfaces\IUrlEncoder;
-use App\UrlConverter\UrlConverter;
+use PHPUnit\Util\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
@@ -17,23 +17,25 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 #[Route('/url')]
 class UrlConverterController extends AbstractController
 {
-    #[Route('/encode/{url}', name: 'url_encode', requirements: ['url' => '(http|https|ftp):\/\/.*'], methods: 'GET')]
-    public function urlEncode(string $url, IUrlEncoder $converter): Response
+    #[Route('/encode', name: 'url_encode', requirements: ['url' => '(http|https|ftp):\/\/.*'], methods: 'POST')]
+    public function urlEncode(Request $request, IUrlEncoder $converter): RedirectResponse
     {
+        $url = $request->get('url');
         $code = $converter->encode($url);
 
-        return $this->render('url_converter/show_code.html.twig', [
-            'code' => $code,
-        ]);
+        return $this->redirectToRoute('url_decode', ['code' => $code]);
     }
 
-    #[Route('/decode/{code}', name: 'url_decode', requirements: ['code' => '[a-zA-Z0-9]+'], methods: 'GET')]
-    public function urlDecode(string $code, IUrlDecoder $converter): Response
+    #[Route('/{code}/statistic', name: 'url_decode', requirements: ['code' => '[a-zA-Z0-9]+'], methods: 'GET')]
+    public function urlDecode(UrlCode $urlCodeEntity): Response
     {
-        $url = $converter->decode($code);
+        // if user un-authorised throw exception
+        if ($this->getUser() !== $urlCodeEntity->getUser()) {
+            throw new Exception('No access!');
+        }
 
-        return $this->render('url_converter/show_url.html.twig', [
-            'url' => $url,
+        return $this->render('url_converter/url_info.html.twig', [
+            'url_code' => $urlCodeEntity,
         ]);
     }
 
