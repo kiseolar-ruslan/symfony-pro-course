@@ -10,7 +10,7 @@
             <br>
             Url: {{ url_code.url }}
             <br>
-            Code: {{ url_code.code }}
+            Code: <a href="{{ path('short_url', {code: url_code.code }) }}">{{ url_code.code }}</a>
             <br>
             Counter: {{ url_code.counter }}
             <br>
